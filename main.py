@@ -54,8 +54,8 @@ allBuyPoints = macdk1_getAllBuyPoints(pricesData, macd, modifiedSignalLineWithK)
 allSellPoints = macdk1_getAllSellPoints(pricesData, macd, modifiedSignalLineWithK)
 
 fig = standardPlot(pricesData, macd, signalLine, show=True)
-addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, show=True)
-addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=True)
+addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, show=False)
+addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=False)
 addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 
 ## Modified signal Line with K-2 test with a single data

@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import ticker, font_manager
+from PIL import Image as im
 
 class IndexManager(object):
 
@@ -93,7 +94,9 @@ def addModifiedSignalLine(fig, modifiedSignalLine, color='violet', show=True):
     ax2 = fig.get_axes()[1]
     ax2.plot(idm.evenlyIndex, modifiedSignalLine, color=color, lw=1, label='Modified Signal Line')
     path = "resources/files/macd.png"
-    if show:plt.savefig(path)
+    if show:
+        plt.savefig(path)
+        im.open(path).show()
     #if show: plt.show()
     return fig
 
@@ -102,7 +105,9 @@ def addMarkers(fig, macd, tList, markerSize=20, color='#00CC00', show=True):
     ax2 = fig.get_axes()[1]
     ax2.scatter(idm.evenlyIndex[tList], macd[tList], color=color, s=markerSize)
     path = "resources/files/macd.png"
-    if show:plt.savefig(path)
+    if show:
+        plt.savefig(path)
+        im.open(path).show()
     #if show: plt.show()
     return fig
 
@@ -114,7 +119,9 @@ def addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, color='orange', sho
     leg2 = ax2.legend(loc='best', shadow=True, fancybox=True, prop=props, scatterpoints=1, markerscale=1)
     leg2.get_frame().set_alpha(0.5)
     path = "resources/files/macd.png"
-    if show:plt.savefig(path)
+    if show:
+        plt.savefig(path)
+        im.open(path).show()
     #if show: plt.show()
     return fig
     
