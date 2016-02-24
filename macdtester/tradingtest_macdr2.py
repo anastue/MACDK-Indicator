@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
+from decimal import Decimal as dc
 
 from macdtester.basic import isAnUpCrossingPoint, isADownCrossingPoint, Trade, TotalTrade, getTradingPeriods
 from macdtester.data import getPricesData
@@ -64,7 +65,8 @@ def MACDR2Test(pricesData, macd, signalLine):
     if len(profitRateList) > 0:
         return np.mean(successList), np.mean(profitRateList)
     else:
-        return None, None
+        #return None, None
+        return dc(0),dc(0)
 
 def getAllBuyPoints(pricesData, macd, signalLine):
     periods = getTradingPeriods(macd, signalLine)

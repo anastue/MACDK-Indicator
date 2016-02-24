@@ -22,16 +22,23 @@ class IndexManager(object):
             return None
 
     def dateMappingFormatter(self, x, pos=None):
-        d = self.evenlyIndexToDateTimeIndex(int(x + 0.5))
-        if d is not None:
-            return d.strftime('%b\n%Y')
+        dmf = self.evenlyIndexToDateTimeIndex(int(x + 0.5))
+        if dmf is not None:
+            d1,dmf,d2=dmf.split("\'")
+            #TODO
+            y = dmf[0:4]
+            m = dmf[4:6]
+            d = dmf[6:8]
+            #return dmf.strftime('%b\n%Y')
+            return '%s\n%s'%(m,y)
         else:
-            return ''
+            return '' 
 
 def standardPlot(pricesData, macd, signalLine, show=True):
     idm = IndexManager(pricesData.index)
-    plt.rc('axes', grid=True)
-    plt.rc('grid', color='0.75', linestyle='-', linewidth=0.5)
+    plt.rc('axes', grid=False)
+    #set grid
+    plt.rc('grid', color='0.75', linestyle='-', linewidth=0.1)
     
     left, width = 0.1, 0.8
     rect1 = [left, 0.6, width, 0.3]
@@ -77,22 +84,26 @@ def standardPlot(pricesData, macd, signalLine, show=True):
     leg1 = ax1.legend(loc='best', shadow=True, fancybox=True, prop=props, scatterpoints=1, markerscale=1)
     leg1.get_frame().set_alpha(0.5) 
     leg2 = ax2.legend(loc='best', shadow=True, fancybox=True, prop=props, scatterpoints=1, markerscale=1)
-    leg2.get_frame().set_alpha(0.5)
-    if show: plt.show()
+    leg2.get_frame().set_alpha(0.1)
+    #if show: plt.show()
     return fig
 
 def addModifiedSignalLine(fig, modifiedSignalLine, color='violet', show=True):
     idm = IndexManager(modifiedSignalLine.index)
     ax2 = fig.get_axes()[1]
     ax2.plot(idm.evenlyIndex, modifiedSignalLine, color=color, lw=1, label='Modified Signal Line')
-    if show: plt.show()
+    path = "resources/files/macd.png"
+    if show:plt.savefig(path)
+    #if show: plt.show()
     return fig
 
-def addMarkers(fig, macd, tList, markerSize=40, color='#00CC00', show=True):
+def addMarkers(fig, macd, tList, markerSize=20, color='#00CC00', show=True):
     idm = IndexManager(macd.index)
     ax2 = fig.get_axes()[1]
     ax2.scatter(idm.evenlyIndex[tList], macd[tList], color=color, s=markerSize)
-    if show: plt.show()
+    path = "resources/files/macd.png"
+    if show:plt.savefig(path)
+    #if show: plt.show()
     return fig
 
 def addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, color='orange', show=True):
@@ -102,7 +113,9 @@ def addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, color='orange', sho
     props = font_manager.FontProperties(size=10)
     leg2 = ax2.legend(loc='best', shadow=True, fancybox=True, prop=props, scatterpoints=1, markerscale=1)
     leg2.get_frame().set_alpha(0.5)
-    if show: plt.show()
+    path = "resources/files/macd.png"
+    if show:plt.savefig(path)
+    #if show: plt.show()
     return fig
     
     

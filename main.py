@@ -15,14 +15,14 @@ from macdtester.tradingtest_modifiedsignalline_withK_2 import MACDK2Test, getAll
 ## prepare data for a single data
 print('preparing data...')
 symbol=input("please input SET name: ")
+if not symbol:raise Exception("Please Define SET")
 symbol=symbol.upper()
-#symbol = 'AMATA'
 pricesData = getPricesData(symbol)
-macd, signalLine = getMACDAndSignalLine(pricesData, 12, 26, 9)
+macd, signalLine = getMACDAndSignalLine(pricesData, 12, 26, 9) #can change period later
 modifiedSignalLine = getModifiedSignalLine(macd, signalLine, 1)
 modifiedSignalLineWithK = getModifiedSignalLineWithK(macd, signalLine)
 
-pricesData = pricesData[25:] # can change period
+pricesData = pricesData[25:]
 macd = macd[25:]
 signalLine = signalLine[25:]
 modifiedSignalLine = modifiedSignalLine[25:]
@@ -31,14 +31,14 @@ modifiedSignalLineWithK = modifiedSignalLineWithK[25:]
 ## modified signal line test with a single data
 print('modified signal line with K test for ' + symbol)
 successRate, profitRate = modifiedSignalLineWithKtest(pricesData, macd, modifiedSignalLineWithK)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = macdk_getAllBuyPoints(pricesData, macd, modifiedSignalLineWithK)
 allSellPoints = macdk_getAllSellPoints(pricesData, macd, modifiedSignalLineWithK)
 
-fig = standardPlot(pricesData, macd, signalLine, show=False)
+fig = standardPlot(pricesData, macd, signalLine, show=True)
 addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, show=False)
 addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=False)
 addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
@@ -46,23 +46,23 @@ addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 ## Modified signal Line with K-1 test with a single data
 print('MACDK1 test for ' + symbol)
 successRate, profitRate = MACDK1Test(pricesData, macd, modifiedSignalLineWithK)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = macdk1_getAllBuyPoints(pricesData, macd, modifiedSignalLineWithK)
 allSellPoints = macdk1_getAllSellPoints(pricesData, macd, modifiedSignalLineWithK)
 
-fig = standardPlot(pricesData, macd, signalLine, show=False)
-addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, show=False)
-addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=False)
+fig = standardPlot(pricesData, macd, signalLine, show=True)
+addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, show=True)
+addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=True)
 addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 
 ## Modified signal Line with K-2 test with a single data
 print('MACDK2 test for ' + symbol)
 successRate, profitRate = MACDK2Test(pricesData, macd, modifiedSignalLineWithK)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = macdk2_getAllBuyPoints(pricesData, macd, modifiedSignalLineWithK)
@@ -76,8 +76,8 @@ addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 ## original MACD test with a single data
 print('Original MACD test for ' + symbol)
 successRate, profitRate = originalMACDTest(pricesData, macd, signalLine)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = org_getAllBuyPoints(pricesData, macd, signalLine)
@@ -91,8 +91,8 @@ addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 ## MACDR1 test with a single data
 print('MACDR1 test for ' + symbol)
 successRate, profitRate = MACDR1Test(pricesData, macd, signalLine)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = macdr1_getAllBuyPoints(pricesData, macd, signalLine)
@@ -105,8 +105,8 @@ addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 ## MACDR2 test with a single data
 print('MACDR2 test for ' + symbol)
 successRate, profitRate = MACDR2Test(pricesData, macd, signalLine)
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 allBuyPoints = macdr2_getAllBuyPoints(pricesData, macd, signalLine)
@@ -129,22 +129,22 @@ allSellPoints = modsig_getAllSellPoints(pricesData, macd, signalLine, modifiedSi
 fig = standardPlot(pricesData, macd, signalLine, show=False)
 addModifiedSignalLine(fig, modifiedSignalLine, show=False)
 addMarkers(fig, macd, allBuyPoints, color='#00CC00', show=False)
-addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
+addMarkers(fig, macd, allSellPoints, color='#FF0000', show=True)
 
 ## Modified signal Line wit K test in SET 100
 print('Modified signal Line wit K test in SET 100')
 successRate, profitRate = modifiedSignalLineWithKtestInSET100(verbose=True)
 print('Modified signal Line wit K test in SET 100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 ## MACDK1 test in SET-100
 print('MACDK1 test in SET-100')
 successRate, profitRate = MACDK1TestWithSET100(verbose=True)
 print('MACDK1 test in SET-100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 ## MACDK2 test in SET-100
@@ -159,30 +159,30 @@ input("Press Enter to continue...")
 print('Original MACD test in SET-100')
 successRate, profitRate = originalMACDTestWithSET100(verbose=True)
 print('Original MACD test in SET-100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 ## MACDR1 test in SET-100
 print('MACDR1 test in SET-100')
 successRate, profitRate = MACDR1TestWithSET100(verbose=True)
 print('MACDR1 test in SET-100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 ## MACDR2 test in SET-100
 print('MACDR2 test in SET-100')
 successRate, profitRate = MACDR2TestWithSET100(verbose=True)
 print('MACDR2 test in SET-100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")
 
 ## Modified signal line test in SET-100
 print('Modified signal line test in SET-100')
 successRate, profitRate = modifiedSignalLineTestWithSET100(K=0.1, verbose=True)
 print('Modified signal line test in SET-100')
-print('success rate: %f' % successRate)
-print('profit rate: %f' % profitRate)
+print('success rate: %s' % successRate)
+print('profit rate: %s' % profitRate)
 input("Press Enter to continue...")

@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
+import webbrowser
 
 from macdtester.basic import isAnUpCrossingPoint, isADownCrossingPoint, Trade, TotalTrade, getTradingPeriods, getUpCrossingPointInAPeriod
 from macdtester.macd import getMACDAndSignalLine
@@ -90,7 +91,7 @@ def getAllSellPoints(pricesData, macd, signalLine, modifiedSignalLine):
 
 def modifiedSignalLineTestWithSET100(K=1, verbose=False):
     directory = './resources/stockdata/'
-    ignoreList = ['BANPU', 'MAKRO', 'VGI', 'STPI']
+    ignoreList = ['BANPU', 'MAKRO', 'VGI', 'STPI'] #Ignore this becuz value discontinuous
     symbolList = [f.replace('.csv','') for f in os.listdir(directory) if f.endswith('.csv') and f.split('.')[0] not in ignoreList]
     
     resultList = pd.DataFrame({'success rate': None, 'profit rate': None}, index=symbolList)
@@ -113,7 +114,6 @@ def modifiedSignalLineTestWithSET100(K=1, verbose=False):
         resultList['success rate'][symbol] = successRate
         
     if verbose:
-        import webbrowser
         f = open(os.getcwd() + '/temp.html', 'w')
         f.write('MACDP test with SET-100')
         f.write(resultList.to_html())
