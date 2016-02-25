@@ -4,6 +4,8 @@ import numpy as np
 from matplotlib import ticker, font_manager
 from PIL import Image as im
 
+path = "resources/files/macd.png"
+
 class IndexManager(object):
 
     def __init__(self, indexSeries):
@@ -45,12 +47,10 @@ def standardPlot(pricesData, macd, signalLine, show=True):
     rect1 = [left, 0.6, width, 0.3]
     rect2 = [left, 0.1, width, 0.5]
     
-    
     fig = plt.figure(facecolor='white')
     axescolor  = '#f9f9f9'  # the axes background color
     ax1 = fig.add_axes(rect1, axisbg=axescolor)  #left, bottom, width, height
     ax2 = fig.add_axes(rect2, axisbg=axescolor, sharex=ax1)
-    
     
     #we don't want to label all indices, just the first day in each month are enough
     #this function return the list of the (evenly) indices of the first day in each month
@@ -71,7 +71,7 @@ def standardPlot(pricesData, macd, signalLine, show=True):
     #set nice left and right spaces
     ax1.set_xlim(idm.evenlyIndex[0] - 2, idm.evenlyIndex[-1] + 2)
     
-    ax1.plot(idm.evenlyIndex, pricesData, color='black', lw=2, label='closing price')
+    ax1.plot(idm.evenlyIndex, pricesData, color='black', lw=2, label='Closing price')
     ax2.plot(idm.evenlyIndex, macd, color='red', lw=1.5, label='MACD Line')
     ax2.plot(idm.evenlyIndex, signalLine, color='blue', lw=1, label='Signal Line')
     
@@ -93,7 +93,6 @@ def addModifiedSignalLine(fig, modifiedSignalLine, color='violet', show=True):
     idm = IndexManager(modifiedSignalLine.index)
     ax2 = fig.get_axes()[1]
     ax2.plot(idm.evenlyIndex, modifiedSignalLine, color=color, lw=1, label='Modified Signal Line')
-    path = "resources/files/macd.png"
     if show:
         plt.savefig(path)
         im.open(path).show()
@@ -104,7 +103,6 @@ def addMarkers(fig, macd, tList, markerSize=20, color='#00CC00', show=True):
     idm = IndexManager(macd.index)
     ax2 = fig.get_axes()[1]
     ax2.scatter(idm.evenlyIndex[tList], macd[tList], color=color, s=markerSize)
-    path = "resources/files/macd.png"
     if show:
         plt.savefig(path)
         im.open(path).show()
@@ -118,11 +116,9 @@ def addModifiedSignalLineWithK(fig, modifiedSignalLineWithK, color='orange', sho
     props = font_manager.FontProperties(size=10)
     leg2 = ax2.legend(loc='best', shadow=True, fancybox=True, prop=props, scatterpoints=1, markerscale=1)
     leg2.get_frame().set_alpha(0.5)
-    path = "resources/files/macd.png"
     if show:
         plt.savefig(path)
+        #show photo by imagemagick
         im.open(path).show()
     #if show: plt.show()
     return fig
-    
-    
